@@ -69,10 +69,10 @@ function [] = plotKinematicChanges(rawVals,fs)
 spdData = cell2mat(rawVals.spd(4:6))'.*fs;
 numPts = cellfun(@numel,rawVals.spd(4:6));
 g = [repmat({'Before'},numPts(1),1); repmat({'During Out'},numPts(2),1); repmat({'During In'},numPts(3),1)];
-figure;dabest2(spdData,g,'N');suptitle(['Walking Speed'])
+figure;dabest2(spdData,g,'N');suptitle(['Run Speed'])
 
 % for comparing curvature
-STData = cell2mat(rawVals.sharpTurn(4:6))';
+STData = cell2mat(rawVals.sharpTurn(4:6))';% sharp turns are defined by total curvature
 numPts = cellfun(@numel,rawVals.sharpTurn(4:6));
 g = [repmat({'Before'},numPts(1),1); repmat({'During Out'},numPts(2),1); repmat({'During In'},numPts(3),1)];
 figure;dabest2(STData,g,'N');suptitle(['Sharp Turn Curvature'])
@@ -88,6 +88,13 @@ runDurData = cell2mat(rawVals.dur(4:6))'./fs;
 numPts = cellfun(@numel,rawVals.dur(4:6));
 g = [repmat({'Before'},numPts(1),1); repmat({'During Out'},numPts(2),1); repmat({'During In'},numPts(3),1)];
 figure;dabest2(runDurData,g,'N');suptitle(['Run Duration'])
+
+% for comparing run curvature
+runCurvData = cell2mat(rawVals.curvWalk(4:6));% curve walks are defined by average curvature
+numPts = cellfun(@numel,rawVals.curvWalk(4:6));
+g = [repmat({'Before'},numPts(1),1); repmat({'During Out'},numPts(2),1); repmat({'During In'},numPts(3),1)];
+figure;dabest2(runCurvData,g,'N');suptitle(['Run Curvature'])
+
 
 end
 

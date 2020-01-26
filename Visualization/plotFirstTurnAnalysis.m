@@ -1,7 +1,8 @@
-function [] = plotFirstTurnAnalysis(opts)
+function [] = plotFirstTurnAnalysis(condition,opts)
 % This function plots analysis figures for the first two turns
 %
 % Inputs:
+%    condition: crossing 'In2Out' or 'Out2In'
 %    opts: structure with fields
 %       opts.dataConsFold: folder with the consolidated data
 %       opts.crossFold: folder with the crossing tracks data
@@ -16,6 +17,12 @@ datainfo2 = dir(crossFold);
 dataFiles = cell(1,length(datainfo)-2);
 dataCrossFiles = cell(1,length(datainfo)-2);
 
+if strcmpi(condition,'Out2In')
+    sce = 'when entering';
+else
+    sce = 'when leaving';
+end
+
 genotype = struct('name',[],'files',[]);
 for K = 1:length(dataFiles)
     thisdir = datainfo(K+2).name;
@@ -27,11 +34,20 @@ end
 
 nGen = length(dataFiles);
 allFlies = cell(size(dataFiles));allST = cell(size(dataFiles));
-allTmpInOut = cell(size(dataFiles));
-allTmpTracksInOut = cell(size(dataFiles));
+allTmpCond = cell(size(dataFiles));
+allTmpTracksCond = cell(size(dataFiles));
 for i = 1:nGen
     load(dataFiles{i},'Data','empFlys','curvPks','stopCond')
     load(dataCrossFiles{i},'tmpInOut','tmpTracksInOut2','tmpOutIn','tmpTracksOutIn2');
+    if strcmpi(condition,'Out2In')
+        load(dataCrossFiles{i},'tmpOutIn','tmpTracksOutIn2');
+        allTmpCond{i} = tmpOutIn;
+        allTmpTracksCond{i} = tmpTracksOutIn2;
+    else
+        load(dataCrossFiles{i},'tmpInOut','tmpTracksInOut2');
+        allTmpCond{i} = tmpInOut;
+        allTmpTracksCond{i} = tmpTracksInOut2;
+    end
     
     l1 = length(empFlys.firstEntry);l2 = length(Data.lightOn);
     if l1~=l2
@@ -68,8 +84,7 @@ for i = 1:nGen
         allDec{i}.all{j} = allDec{i}.all{j}(N);
     end
     
-    allTmpInOut{i} = tmpInOut;
-    allTmpTracksInOut{i} = tmpTracksInOut2;
+    
 %     allTmpInOut{i} = tmpOutIn;
 %     allTmpTracksInOut{i} = tmpTracksOutIn2;
 end
@@ -95,24 +110,24 @@ for i = 1:nGen
 end
 
 n2Cons = 1000;
-turn.tot = nan(nGen,max(cellfun(@length,allTmpInOut)),n2Cons);
-turn.initDir = nan(nGen,max(cellfun(@length,allTmpInOut)),n2Cons,3);
-turn.leaveDir = nan(nGen,max(cellfun(@length,allTmpInOut)),n2Cons,3);
-turn.returnDir = nan(nGen,max(cellfun(@length,allTmpInOut)),n2Cons,3);
-turn.endDir = nan(nGen,max(cellfun(@length,allTmpInOut)),n2Cons,3);
-turn.time2Turn = nan(nGen,max(cellfun(@length,allTmpInOut)),n2Cons);
-turn.dist2Turn = nan(nGen,max(cellfun(@length,allTmpInOut)),n2Cons);
-turn.spd2Turn = nan(nGen,max(cellfun(@length,allTmpInOut)),n2Cons);
-turn.radSpd2Turn = nan(nGen,max(cellfun(@length,allTmpInOut)),n2Cons);
+turn.tot = nan(nGen,max(cellfun(@length,allTmpCond)),n2Cons);
+turn.initDir = nan(nGen,max(cellfun(@length,allTmpCond)),n2Cons,3);
+turn.leaveDir = nan(nGen,max(cellfun(@length,allTmpCond)),n2Cons,3);
+turn.returnDir = nan(nGen,max(cellfun(@length,allTmpCond)),n2Cons,3);
+turn.endDir = nan(nGen,max(cellfun(@length,allTmpCond)),n2Cons,3);
+turn.time2Turn = nan(nGen,max(cellfun(@length,allTmpCond)),n2Cons);
+turn.dist2Turn = nan(nGen,max(cellfun(@length,allTmpCond)),n2Cons);
+turn.spd2Turn = nan(nGen,max(cellfun(@length,allTmpCond)),n2Cons);
+turn.radSpd2Turn = nan(nGen,max(cellfun(@length,allTmpCond)),n2Cons);
 spd = cell(1,nGen);
 for i = 1:nGen
     
-    flyN = allTmpInOut{i}(:,3)+1;
+    flyN = allTmpCond{i}(:,3)+1;
     first2turns.Bef{i} = [];first2turns.Aft{i} = [];
     laterTurns.Bef{i} = [];laterTurns.Aft{i} = [];
     kk = ones(1,max(flyN));
-    for j = 1:size(allTmpInOut{i},1)
-        tmpTrack = allTmpTracksInOut{i}(j,~isnan(allTmpTracksInOut{i}(j,:)));
+    for j = 1:size(allTmpCond{i},1)
+        tmpTrack = allTmpTracksCond{i}(j,~isnan(allTmpTracksCond{i}(j,:)));
         
         if length(tmpTrack)>30
             spd{i}(j,:) = sqrt(allFlies{i}.thrust(flyN(j),tmpTrack(1)-30:tmpTrack(1)+30).^2+allFlies{i}.slip(flyN(j),tmpTrack(1)-30:tmpTrack(1)+30).^2);
@@ -165,11 +180,12 @@ gen = [1:2];
 
 % plot time before first turn
 durBefFirstTurn = reshape(turn.time2Turn(gen,:,1)',[],1);
-g =  [repmat(genotype.name(1),max(cellfun(@length,allTmpInOut)),1);...
-    repmat(genotype.name(2),max(cellfun(@length,allTmpInOut)),1)];
+g =  [repmat(genotype.name(1),max(cellfun(@length,allTmpCond)),1);...
+    repmat(genotype.name(2),max(cellfun(@length,allTmpCond)),1)];
 g(isnan(durBefFirstTurn)) = [];durBefFirstTurn(isnan(durBefFirstTurn)) = [];
 g(durBefFirstTurn>10) = [];durBefFirstTurn(durBefFirstTurn>10) = [];
-figure;suptitle('Time Before Entering First Turn (s)');[ss,~,~] = dabest2(durBefFirstTurn,g,'N');
+figure;suptitle(['Time Before Entering First Turn (s) ' sce]);
+[ss,~,~] = dabest2(durBefFirstTurn,g,'N');
 topRow = [num2str(ss.mdCi(1)) '; ' num2str(ss.md) '; ' num2str(ss.mdCi(2))];
 title(topRow);
 
@@ -178,10 +194,10 @@ p1 = ranksum(durBefFirstTurn(ndx,1),durBefFirstTurn(~ndx,1));
 
 % plot speed before first turn
 spdBefFirstTurn = reshape(turn.spd2Turn(gen,:,1)',[],1);
-g =  [repmat(genotype.name(1),max(cellfun(@length,allTmpInOut)),1);...
-    repmat(genotype.name(2),max(cellfun(@length,allTmpInOut)),1)];
+g =  [repmat(genotype.name(1),max(cellfun(@length,allTmpCond)),1);...
+    repmat(genotype.name(2),max(cellfun(@length,allTmpCond)),1)];
 g(isnan(spdBefFirstTurn)) = [];spdBefFirstTurn(isnan(spdBefFirstTurn)) = [];
-figure;[ss,~,~] = dabest2(spdBefFirstTurn,g,'N');suptitle('Speed Before Entering First Turn (mm/s)')
+figure;[ss,~,~] = dabest2(spdBefFirstTurn,g,'N');suptitle(['Speed Before Entering First Turn (mm/s) ' sce])
 topRow = [num2str(ss.mdCi(1)) '; ' num2str(ss.md) '; ' num2str(ss.mdCi(2))];
 title(topRow)
 
@@ -216,6 +232,7 @@ for j = 1:2
     ylim([0 1]);ylabel('Probability')
     title([genotype.name{j} ', n=' num2str(numel(oppDir)) ' turns'])
 end
+suptitle(sce)
 
 if opts.plotFig
     for i = 1:get(gcf,'Number')
