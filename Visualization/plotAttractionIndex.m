@@ -118,7 +118,8 @@ if opts.plotFig
     n = get(gcf,'Number');
     for i = 1:n
         figure(i);set(gcf,'Position',[2 42 798 774])
-        print('-painters','-dpsc2','PaperFigures.ps','-loose','-append');
+        suptitle('Attraction Index (fraction time in light zone)')
+        %print('-painters','-dpsc2','PaperFigures.ps','-loose','-append');
     end
 end
 

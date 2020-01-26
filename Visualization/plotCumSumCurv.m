@@ -107,7 +107,7 @@ ylabel('RMS Error (radians)');title(['Orco Contro/Ret n=' num2str(length(err1))]
 xtickangle(30)
 
 if opts.plotFig
-    print('-painters','-dpsc2','figurePanels.ps','-loose','-append');
+    print('-painters','-dpsc2','figurePanels.ps','-loose','-append','-bestfit');
     for i = 1:figNum
         figure(i);
         print('-painters','-dpsc2','figurePanels.ps','-loose','-append');

@@ -17,7 +17,7 @@ load([pwd '\Run and Tumble\RunMat\Orco Retinal\RT_Kin.mat'],'empFlys')
 empFlys = updateFlies(empFlys,attractionNdx);
 empFlys.x = empFlys.x./4;
 empFlys.y = empFlys.y./4;
-fNum = plottingTracks(empFlys,length(empFlys.firstEntry),false,...
+fNum = plottingTracks(empFlys,length(empFlys.firstEntry),false,opts,...
     'Orco Retinal (sort by attn ndx)',[]);
 if opts.plotFig
     for i = 1:fNum
@@ -34,7 +34,7 @@ load([pwd '\Run and Tumble\RunMat\Orco Control\RT_Kin.mat'],'empFlys')
 empFlys = updateFlies(empFlys,attractionNdx);
 empFlys.x = empFlys.x./4;
 empFlys.y = empFlys.y./4;
-fNum = plottingTracks(empFlys,length(empFlys.firstEntry),false,...
+fNum = plottingTracks(empFlys,length(empFlys.firstEntry),false,opts,...
     'Orco Control (sort by attn ndx)',[]);
 if opts.plotFig
     for i = 1:fNum
@@ -51,7 +51,7 @@ load([pwd '\Run and Tumble\RunMat\Single Antenna Orco\RT_Kin.mat'],'empFlys')
 empFlys = updateFlies(empFlys,attractionNdx);
 empFlys.x = empFlys.x./4;
 empFlys.y = empFlys.y./4;
-fNum = plottingTracks(empFlys,length(empFlys.firstEntry),false,...
+fNum = plottingTracks(empFlys,length(empFlys.firstEntry),false,opts,...
     'Single Antennae (sort by attn ndx)',[]);
 if opts.plotFig
     for i = 1:fNum
@@ -69,7 +69,7 @@ load([pwd '\Run and Tumble\RunMat\Orco Retinal\RT_Kin.mat'],'synthFlys')
 synthFlys = updateFlies(synthFlys,attractionNdx);
 synthFlys.x = synthFlys.x./4;
 synthFlys.y = synthFlys.y./4;
-fNum = plottingTracks(synthFlys,length(synthFlys.firstEntry),false,...
+fNum = plottingTracks(synthFlys,length(synthFlys.firstEntry),false,opts,...
     'Kinematic Model (sort by attn ndx)',[]);
 if opts.plotFig
     for i = 1:fNum
@@ -87,7 +87,7 @@ load([pwd '\Run and Tumble\RunMat\Orco Retinal\RT_Kin_BC_TB.mat'],'synthFlys')
 synthFlys = updateFlies(synthFlys,attractionNdx);
 synthFlys.x = synthFlys.x./4;
 synthFlys.y = synthFlys.y./4;
-fNum = plottingTracks(synthFlys,length(synthFlys.firstEntry),false,...
+fNum = plottingTracks(synthFlys,length(synthFlys.firstEntry),false,opts,...
     'Kin+BC+TB Model (sort by attn ndx)',[]);
 if opts.plotFig
     for i = 1:fNum

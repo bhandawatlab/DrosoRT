@@ -69,31 +69,31 @@ function [] = plotKinematicChanges(rawVals,fs)
 spdData = cell2mat(rawVals.spd(4:6))'.*fs;
 numPts = cellfun(@numel,rawVals.spd(4:6));
 g = [repmat({'Before'},numPts(1),1); repmat({'During Out'},numPts(2),1); repmat({'During In'},numPts(3),1)];
-figure;dabest2(spdData,g,'N');suptitle(['Run Speed'])
+figure;dabest2(spdData,g,'N');suptitle('Run Speed (mm/s)')
 
 % for comparing curvature
 STData = cell2mat(rawVals.sharpTurn(4:6))';% sharp turns are defined by total curvature
 numPts = cellfun(@numel,rawVals.sharpTurn(4:6));
 g = [repmat({'Before'},numPts(1),1); repmat({'During Out'},numPts(2),1); repmat({'During In'},numPts(3),1)];
-figure;dabest2(STData,g,'N');suptitle(['Sharp Turn Curvature'])
+figure;dabest2(STData,g,'N');suptitle('Sharp Turn Curvature (degrees)')
 
 % for comparing stop duration
 stopDurData = cell2mat(rawVals.dur(1:3))'./fs;
 numPts = cellfun(@numel,rawVals.dur(1:3));
 g = [repmat({'Before'},numPts(1),1); repmat({'During Out'},numPts(2),1); repmat({'During In'},numPts(3),1)];
-figure;dabest2(stopDurData,g,'N');suptitle(['Stop Duration'])
+figure;dabest2(stopDurData,g,'N');suptitle('Stop Duration (sec)')
 
 % for comparing run duration
 runDurData = cell2mat(rawVals.dur(4:6))'./fs;
 numPts = cellfun(@numel,rawVals.dur(4:6));
 g = [repmat({'Before'},numPts(1),1); repmat({'During Out'},numPts(2),1); repmat({'During In'},numPts(3),1)];
-figure;dabest2(runDurData,g,'N');suptitle(['Run Duration'])
+figure;dabest2(runDurData,g,'N');suptitle('Run Duration (sec)')
 
 % for comparing run curvature
 runCurvData = cell2mat(rawVals.curvWalk(4:6));% curve walks are defined by average curvature
 numPts = cellfun(@numel,rawVals.curvWalk(4:6));
 g = [repmat({'Before'},numPts(1),1); repmat({'During Out'},numPts(2),1); repmat({'During In'},numPts(3),1)];
-figure;dabest2(runCurvData,g,'N');suptitle(['Run Curvature'])
+figure;dabest2(runCurvData,g,'N');suptitle('Run Curvature (degrees/frame)')
 
 
 end
@@ -108,7 +108,7 @@ STData = [cell2mat(rawVals.sharpTurn(4))'; allTurns'.*180./pi; firstTurnsRet'.*1
 numPts = [cellfun(@numel,rawVals.sharpTurn(4)), numel(allTurns), numel(firstTurnsRet), numel(laterTurnsRet)];
 g = [repmat({'Before'},numPts(1),1); repmat({'During Out'},numPts(2),1);...
     repmat({['First 2 turns'  scenario]},numPts(3),1); repmat({['later turns'  scenario]},numPts(4),1)];
-figure;[ss,avr,moes] = dabest2(STData,g,'N');suptitle(['Sharp Turn Curvature' scenario])
+figure;[ss,avr,moes] = dabest2(STData,g,'N');suptitle(['Sharp Turn Curvature' scenario 'degrees'])
 
 
 end
@@ -126,7 +126,8 @@ for i = 1:5
     subplot(3,2,i);
     histogram(allTurnCell{i}(3,allTurnCell{i}(1,:)<0).*100,xl,'Normalization','probability')
     hold on;histogram(allTurnCell{i}(3,allTurnCell{i}(1,:)>0).*100,xl,'Normalization','probability')
-    legend({'left turn','right turn'});xlabel('Area under curve (cm^2)');title(titles{i})
+    legend({'left turn','right turn'});
+    xlabel('Area under curve (cm^2)');ylabel('Probability');title(titles{i})
 end
 
 figure(figNum(2));set(gcf,'Position',[2 42 798 774]);h = nan(2,5);
@@ -155,7 +156,8 @@ for i = 1:5
     subplot(3,2,i);
     histogram(allTurnCell{i}(2,allTurnCell{i}(1,:)<0)./fs,xl,'Normalization','probability')
     hold on;histogram(allTurnCell{i}(2,allTurnCell{i}(1,:)>0)./fs,xl,'Normalization','probability')
-    legend({'left turn','right turn'});xlabel('distance traveled');title(titles{i})
+    legend({'left turn','right turn'});
+    xlabel('distance traveled');ylabel('Probability');title(titles{i})
 end
 
 end

@@ -124,7 +124,7 @@ elseif nD == 2
     imagesc(p1);
     set(gca, 'YDir', 'Normal');
     title([scenario ' Control'])
-    xlabel('Dur');ylabel('Curv');
+    xlabel('Dur (frames)');ylabel('Curv (degrees)');
     
     h(2) = subplot(3,2,subplotNdx+1);
     imagesc(p2);

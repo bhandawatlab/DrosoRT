@@ -123,6 +123,8 @@ text(-9,3,['Start Pos: (' num2str(Data.x(fly,track(1))) ', ' ...
     num2str(Data.y(fly,track(1))) ')'],'FontSize',8)
 text(-9,2,[' End Pos: (' num2str(Data.x(fly,track(end))) ', ' ...
     num2str(Data.y(fly,track(end))) ')'],'FontSize',8)
+text(-9,1,'red = sharp turn','FontSize',8)
+text(-9,0,'black = curved walk','FontSize',8)
 suptitle('Sample ST/CW Trajectory')
 set(gcf,'Position',[1.6667, 41.6667, 638.6667, 599.3333])
 
