@@ -63,8 +63,8 @@ save('Orco Raw Vals.mat', 'rawVals');
 % How flies perform ST and comparison to Katsov data
 STAnalysisHandle(opts);
 
-%--------------------------------------------------------------------------
-% Create run and tumble model
+--------------------------------------------------------------------------
+Create run and tumble model
 tic
 RunAndTumbleHandle(opts);
 toc
@@ -77,7 +77,10 @@ opts.plotFig = true;
 plotAttractionIndex(opts)
 plotChangeInKinematics(opts)
 plotDecisionDensity(opts)
-plotFirstTurnAnalysis(opts)
+plotFirstTurnAnalysis('In2Out',opts)
+plotFirstTurnAnalysis('Out2In',opts)
+plotSpdCrossing('In2Out',opts)
+plotSpdCrossing('Out2In',opts)
 
 files{1} = 'Run and Tumble\RunMat\Orco Retinal\RT_Kin';
 files{2} = 'Run and Tumble\RunMat\Orco Retinal\RT_Kin_BC_TB';
@@ -122,9 +125,11 @@ end
 
 plotTracksByAttnNdx(opts)
 
-ps2pdf('psfile', 'PaperFigures.ps', 'pdffile', 'PaperFigures.pdf', 'gspapersize', 'letter',...
-'gscommand','C:\Program Files\gs\gs9.50\bin\gswin64.exe',...
-'gsfontpath','C:\Program Files\gs\gs9.50\lib',...
-'gslibpath','C:\Program Files\gs\gs9.50\lib');
+% uncomment this and edit the paths if using ghostscript to convert ps file
+% to pdf file
+% ps2pdf('psfile', 'PaperFigures.ps', 'pdffile', 'PaperFigures.pdf', 'gspapersize', 'letter',...
+% 'gscommand','C:\Program Files\gs\gs9.50\bin\gswin64.exe',...
+% 'gsfontpath','C:\Program Files\gs\gs9.50\lib',...
+% 'gslibpath','C:\Program Files\gs\gs9.50\lib');
 
 
