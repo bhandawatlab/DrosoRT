@@ -2,6 +2,9 @@
 
 DrosoRT contains the MATLAB code to create an agent based model of drosophila locomotion with increasing complexity. Current version of this code assumes that the environment to model is an circular arena 4 cm in radius with an concentric stimulus zone of some known radius.
 
+## Software
+This code was run on MATLAB 2019b. However, it should be compatable with MATLAB 2017 and higher.
+
 ## Data location
 
 Please download the dataset from [title](https://www.example.com)
