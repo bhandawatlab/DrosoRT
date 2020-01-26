@@ -1,4 +1,4 @@
-function [fNum] = plottingTracks(flys,totFly,plotStops,title,fName)
+function [fNum] = plottingTracks(flys,totFly,plotStops,opts,title,fName)
 % This function plots the trajectories of flies
 %
 % Inputs:
@@ -22,8 +22,6 @@ for i = 1:min(totFly,length(firstEntry))
         set(gcf,'Position',[1.6667, 41.6667, 638.6667, 599.3333])
     end
     subplot(5,4,k);hold on
-%     plot(flys.x(i,1:firstEntry(i)),flys.y(i,1:firstEntry(i)),'g');hold on
-%     plot(flys.x(i,firstEntry(i):end),flys.y(i,firstEntry(i):end),'r');
     tmpR = sqrt(flys.x(i,:).^2+flys.y(i,:).^2);
     [startNdx,endNdx,type] = startEndSeq(tmpR>border);
     startNdx(type==0) = [];endNdx(type==0) = [];
@@ -40,11 +38,9 @@ for i = 1:min(totFly,length(firstEntry))
     for j = 1:length(startNdx)
         if type(j) == 1
             if startNdx(j)<firstEntry(i)
-                %plot(flys.x(i,startNdx(j):endNdx(j)),flys.y(i,startNdx(j):endNdx(j)),'--g');
                 drawArc([0;0],[flys.x(i,startNdx(j)); flys.y(i,startNdx(j))],...
                     [flys.x(i,endNdx(j)); flys.y(i,endNdx(j))],'g') ;
             else
-                %plot(flys.x(i,startNdx(j):endNdx(j)),flys.y(i,startNdx(j):endNdx(j)),'--r');
                 drawArc([0;0],[flys.x(i,startNdx(j)); flys.y(i,startNdx(j))],...
                     [flys.x(i,endNdx(j)); flys.y(i,endNdx(j))],'r') ;
             end
@@ -64,11 +60,12 @@ for i = 1:min(totFly,length(firstEntry))
         plot(flys.stopsBefore{i}(1,:),flys.stopsBefore{i}(2,:),'k*')
         plot(flys.stopsDuring{i}(1,:),flys.stopsDuring{i}(2,:),'b*')
     end
-	plotCircle([0,0],1/4,50,'c');
-    plotCircle([0,0],1.3/4,50,'c');
+	%plotCircle([0,0],1/4,50,'c');
+    %plotCircle([0,0],1.3/4,50,'c');
+    plotCircle([0,0],opts.border,50,'c');
     plotCircle([0,0],4/4,50,'k');
     
-    axis([-1 1 -1 1])
+    axis equal;axis([-1 1 -1 1]);
     axis off
     hold on
     k = k+1;

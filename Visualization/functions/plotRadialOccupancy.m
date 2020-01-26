@@ -20,7 +20,7 @@ for i = 1:length(flyAnalysis)
 end
 plot([border,border],[0 0.6],'r--');
 legend([fileName {'border'}],'Location','northEast','Interpreter', 'none')
-title('Before Radial Occupancy')
+xlabel('Normalized radial distance');ylabel('Probability');title('Before Radial Occupancy')
 
 subplot(2,1,2)
 for i = 1:length(flyAnalysis)
@@ -29,7 +29,7 @@ for i = 1:length(flyAnalysis)
 end
 plot([border,border],[0 0.6],'r--');
 legend([fileName {'border'}],'Location','northEast','Interpreter', 'none')
-title('During Radial Occupancy')
+xlabel('Normalized radial distance');ylabel('Probability');title('During Radial Occupancy')
 suptitle(opts.gen)
 
 end
