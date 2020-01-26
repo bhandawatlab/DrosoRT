@@ -108,7 +108,7 @@ STData = [cell2mat(rawVals.sharpTurn(4))'; allTurns'.*180./pi; firstTurnsRet'.*1
 numPts = [cellfun(@numel,rawVals.sharpTurn(4)), numel(allTurns), numel(firstTurnsRet), numel(laterTurnsRet)];
 g = [repmat({'Before'},numPts(1),1); repmat({'During Out'},numPts(2),1);...
     repmat({['First 2 turns'  scenario]},numPts(3),1); repmat({['later turns'  scenario]},numPts(4),1)];
-figure;[ss,avr,moes] = dabest2(STData,g,'N');suptitle(['Sharp Turn Curvature' scenario 'degrees'])
+figure;[ss,avr,moes] = dabest2(STData,g,'N');suptitle(['Sharp Turn Curvature' scenario ' (degrees)'])
 
 
 end
