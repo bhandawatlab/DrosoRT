@@ -1,4 +1,4 @@
-function [fNum] = plottingTracks(flys,totFly,plotStops,title,fName)
+function [fNum] = plottingTracksOld(flys,totFly,plotStops,title,fName)
 % This function plots the trajectories of flies
 %
 % Inputs:
