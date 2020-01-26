@@ -14,4 +14,4 @@ Check to make sure that the data is located in a Data folder under the Data Full
 
 To run all of the code, simply run: `Run_Pipeline`
 
-
+The code creates postscript analysis files. To convert postscript to pdf, you can use adobe or [ghostscript] (https://www.ghostscript.com/)
