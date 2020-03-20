@@ -7,7 +7,7 @@ This code was run on MATLAB 2019b. However, it should be compatable with MATLAB 
 
 ## Data location
 
-Please download the dataset from [title](https://www.example.com)
+Please download the dataset from [figshare](https://doi.org/10.6084/m9.figshare.11356952.v1)
 
 If you are running the sharp turn analysis portion of the code, please download the Katsov dataset from [Dryad](https://datadryad.org/stash/dataset/doi:10.5061/dryad.854j2)
 
