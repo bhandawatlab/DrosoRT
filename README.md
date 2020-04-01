@@ -2,6 +2,8 @@
 
 DrosoRT contains the MATLAB code to create an agent based model of drosophila locomotion with increasing complexity. Current version of this code assumes that the environment to model is an circular arena 4 cm in radius with an concentric stimulus zone of some known radius.
 
+This code accompanies the paper: Tao, L., S. Ozarkar, and V. Bhandawat, "Mechanisms underlying attraction to odors in walking Drosophila. PLOS Computational Biology", 2020. 16(3): p. e1007718.
+
 ## Software
 This code was run on MATLAB 2019b. However, it should be compatable with MATLAB 2017 and higher.
 
