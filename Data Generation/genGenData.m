@@ -11,6 +11,9 @@ function [] = genGenData(opts)
 dataFold = opts.dataFold;
 genFolder = opts.genFold;
 
+% set default fs
+fs = 30;
+
 % get directory information for each genotype
 dirinfo = dir(dataFold);
 dirinfo(~[dirinfo.isdir]) = [];  %remove non-directories
@@ -72,6 +75,16 @@ function [] = createDataGen(sAll,sArenaAll,fly,genotype,curvError,xyError,fs,K,g
 % This just an assignment block
 for KK = 1:length(sAll)
     s = sAll{KK};sArena = sArenaAll{KK};
+        
+    if max((s.Center.x.^2+s.Center.y.^2))>4
+        [s] = convertToUnitCircle(s,sArena);
+        s.Center.x = s.Center.x.*4;% hard coded 
+        s.Center.y = s.Center.y.*4;
+        s.Head.x = s.Head.x.*4;
+        s.Head.y = s.Head.y.*4;
+    end
+    
+    
     Data.xHead(KK,1:length(s.Head.x)) = s.Head.x;
     Data.yHead(KK,1:length(s.Head.y)) = s.Head.y;
     Data.x(KK,1:length(s.Center.x)) = s.Center.x;
