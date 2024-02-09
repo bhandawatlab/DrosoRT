@@ -63,8 +63,8 @@ save('Orco Raw Vals.mat', 'rawVals');
 % How flies perform ST and comparison to Katsov data
 STAnalysisHandle(opts);
 
---------------------------------------------------------------------------
-Create run and tumble model
+%--------------------------------------------------------------------------
+%Create run and tumble model
 tic
 RunAndTumbleHandle(opts);
 toc
