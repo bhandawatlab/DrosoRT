@@ -76,7 +76,7 @@ function [] = createDataGen(sAll,sArenaAll,fly,genotype,curvError,xyError,fs,K,g
 for KK = 1:length(sAll)
     s = sAll{KK};sArena = sArenaAll{KK};
         
-    if max((s.Center.x.^2+s.Center.y.^2))>4
+    if max(sqrt(s.Center.x.^2+s.Center.y.^2))>4.5
         [s] = convertToUnitCircle(s,sArena);
         s.Center.x = s.Center.x.*4;% hard coded 
         s.Center.y = s.Center.y.*4;
